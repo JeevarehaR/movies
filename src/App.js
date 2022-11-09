@@ -6,10 +6,16 @@ import { AddMovie } from "./AddMovie";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -18,10 +24,9 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginLeft: 0,
+
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
     width: "auto",
   },
 }));
@@ -56,19 +61,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function App() {
   const [moviesList, setMoviesList] = useState(INITIAL_MOVIE_LIST);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
   return (
     <div className="App">
       <AppBar position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            Movie App
-          </Typography>
-          <Search>
+          <Button color="inherit" onClick={() => navigate("/")}>
+            Home
+          </Button>
+          <Button color="inherit" onClick={() => navigate("/movies")}>
+            Movies
+          </Button>
+          <Button color="inherit" onClick={() => navigate("/movies/add")}>
+            Add Movies
+          </Button>
+          <Search sx={{ marginLeft: "auto" }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -102,12 +109,49 @@ function App() {
             <AddMovie setMoviesList={setMoviesList} moviesList={moviesList} />
           }
         />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
+
+        <Route
+          path="/movies/:id"
+          element={<MovieDetails moviesList={moviesList} />}
+        />
+
+        {/* <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate replace to="/404" />} /> */}
       </Routes>
     </div>
   );
 }
+
+function MovieDetails({ moviesList }) {
+  const { id } = useParams();
+  const movie = moviesList[id];
+  const styles = { color: movie.rating >= 8 ? "green" : "red" };
+  const navigate = useNavigate();
+  return (
+    <div>
+      <iframe
+        width="100%"
+        height="550px"
+        src={movie.trailer}
+        title={movie.name}
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <div className="movie-detail">
+        <div className="movie-specs">
+          <h2 className="movie-name">{movie.name}</h2>
+          <p style={styles} className="movie-rating">
+            ⭐ {movie.rating}
+          </p>
+        </div>
+        <p className="movie-summary">{movie.summary}</p>
+        <button onClick={() => navigate(-1)}>Back</button>
+      </div>
+    </div>
+  );
+}
+
 function NotFound() {
   const styles = {
     width: "100%",
