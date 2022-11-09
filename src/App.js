@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -80,12 +81,62 @@ function App() {
           </Search>
         </Toolbar>
       </AppBar>
-      {/* <AddMovie setMoviesList={setMoviesList} moviesList={moviesList} /> */}
-      <MovieList
-        movies={moviesList.filter((mv) =>
-          mv.name.toLowerCase().includes(search.toLowerCase())
-        )}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/films" element={<Navigate replace to="/movies" />} />
+        <Route
+          path="/movies"
+          element={
+            <MovieList
+              movies={moviesList.filter((mv) =>
+                mv.name.toLowerCase().includes(search.toLowerCase())
+              )}
+            />
+          }
+        />
+        <Route
+          path="/movies/add"
+          element={
+            <AddMovie setMoviesList={setMoviesList} moviesList={moviesList} />
+          }
+        />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate replace to="/404" />} />
+      </Routes>
+    </div>
+  );
+}
+function NotFound() {
+  const styles = {
+    width: "100%",
+    maxHeight: "400px",
+    objectFit: "contain",
+  };
+  return (
+    <div>
+      <img
+        style={styles}
+        src="https://cdn.dribbble.com/users/1022481/screenshots/3018253/404-snow.gif"
+        alt="404 Not Found"
       />
+    </div>
+  );
+}
+
+function Home() {
+  return (
+    <div>
+      <h1>Welcome to Movie App !!!🥳😺🎊🎉</h1>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div>
+      <h1>Welcome to About Page !!!🥳😺🎊🎉</h1>
     </div>
   );
 }
