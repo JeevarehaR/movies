@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {
   Routes,
   Route,
@@ -91,7 +92,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
         <Route path="/films" element={<Navigate replace to="/movies" />} />
         <Route
           path="/movies"
@@ -146,7 +146,13 @@ function MovieDetails({ moviesList }) {
           </p>
         </div>
         <p className="movie-summary">{movie.summary}</p>
-        <button onClick={() => navigate(-1)}>Back</button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(-1)}
+          startIcon={<KeyboardBackspaceIcon />}
+        >
+          Back
+        </Button>
       </div>
     </div>
   );
@@ -173,14 +179,6 @@ function Home() {
   return (
     <div>
       <h1>Welcome to Movie App !!!🥳😺🎊🎉</h1>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h1>Welcome to About Page !!!🥳😺🎊🎉</h1>
     </div>
   );
 }
