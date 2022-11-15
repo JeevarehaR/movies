@@ -9,7 +9,7 @@ import CardActions from "@mui/material/CardActions";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 
-export function Movie({ movie, id }) {
+export function Movie({ movie, id, deleteButton, editButton }) {
   const [show, setShow] = useState(true);
   const styles = { color: movie.rating >= 8 ? "green" : "red" };
   const navigate = useNavigate();
@@ -43,6 +43,8 @@ export function Movie({ movie, id }) {
       </CardContent>
       <CardActions>
         <Counter />
+        <div className="edit-movie">{editButton}</div>
+        <div className="del-movie">{deleteButton}</div>
       </CardActions>
     </Card>
   );

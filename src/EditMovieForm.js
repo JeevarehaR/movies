@@ -4,53 +4,47 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { API } from "./global";
 
-export function AddMovie() {
-  const [name, setName] = useState("");
-  const [rating, setRating] = useState("");
-  const [poster, setPoster] = useState("");
-  const [summary, setSummary] = useState("");
-  const [trailer, setTrailer] = useState("");
+export function EditMovieForm({ movie }) {
+  const [name, setName] = useState(movie.name);
+  const [rating, setRating] = useState(movie.rating);
+  const [poster, setPoster] = useState(movie.poster);
+  const [summary, setSummary] = useState(movie.summary);
+  const [trailer, setTrailer] = useState(movie.trailer);
   const navigate = useNavigate();
-  const addMovie = () => {
-    const newMovie = {
+  const updateMovie = () => {
+    const updatedMovie = {
       name,
       poster,
       rating,
       summary,
       trailer,
     };
-
-    console.log(newMovie);
-    //copy existing movie list into the new list
-    // setMoviesList([...moviesList, newMovie]);
-    // 1. use post method
-    // 2.body - JSON Data
-    // 3.headers - json
-    fetch(`${API}/movies`, {
-      method: "POST",
-      body: JSON.stringify(newMovie),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    fetch(`${API}/movies/${movie.id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedMovie),
+      headers: { "Content-Type": "application/json" },
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then(() => navigate("/movies"));
   };
   return (
     <div className="add-movie-form">
       <TextField
+        value={name}
         label="Name"
         variant="filled"
         value={name}
         onChange={(event) => setName(event.target.value)}
       />
       <TextField
+        value={poster}
         label="Poster"
         variant="filled"
         value={poster}
         onChange={(event) => setPoster(event.target.value)}
       />
       <TextField
+        value={rating}
         label="Rating"
         variant="filled"
         value={rating}
@@ -58,6 +52,7 @@ export function AddMovie() {
       />
 
       <TextField
+        value={summary}
         label="Summary"
         variant="filled"
         value={summary}
@@ -65,14 +60,15 @@ export function AddMovie() {
       />
 
       <TextField
+        value={trailer}
         label="Trailer"
         variant="filled"
         value={trailer}
         onChange={(event) => setTrailer(event.target.value)}
       />
 
-      <Button variant="outlined" onClick={() => addMovie()}>
-        Add Movie
+      <Button variant="outlined" onClick={() => updateMovie()}>
+        Save
       </Button>
     </div>
   );
