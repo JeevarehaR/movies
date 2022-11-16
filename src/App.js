@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { MovieDetails } from "./MovieDetails";
 import { EditMovie } from "./EditMovie";
+import { BasicForm } from "./BasicForm";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -89,13 +90,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/films" element={<Navigate replace to="/movies" />} />
         <Route path="/movies" element={<MovieList />} />
-        {/* movies=
-        {moviesList.filter((mv) =>
-          mv.name.toLowerCase().includes(search.toLowerCase())
-        )} */}
+        <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/movies/add" element={<AddMovie />} />
         <Route path="/movies/edit/:id" element={<EditMovie />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
+        <Route path="/basic-form" element={<BasicForm />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
