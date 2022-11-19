@@ -6,16 +6,16 @@ import { API } from "./global";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const movieValidationSchema = yup.object({
+export const movieValidationSchema = yup.object({
   name: yup.string().required("Please fill the name!"),
   poster: yup
     .string()
     .min(7, "Need longer poster!")
     .required("Please insert a poster!"),
   rating: yup
-    .string()
+    .number()
     .min(0, "Need higher rating!")
-    .max(3, "Too much rating!")
+    .max(10, "Too much rating!")
     .required("Please provide a rating!"),
   summary: yup
     .string()
@@ -60,20 +60,26 @@ export function AddMovie() {
       <TextField
         id="name"
         name="name"
-        error
-        helperText="Incorrect entry!"
+        error={formik.touched.name && formik.errors.name}
+        helperText={
+          formik.touched.name && formik.errors.name ? formik.errors.name : ""
+        }
         label="Name"
         value={formik.values.name}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         variant="filled"
       />
-      {formik.touched.name && formik.errors.name ? formik.errors.name : ""}
+
       <TextField
         id="poster"
         name="poster"
-        error
-        helperText="Incorrect entry!"
+        error={formik.touched.poster && formik.errors.poster}
+        helperText={
+          formik.touched.poster && formik.errors.poster
+            ? formik.errors.poster
+            : ""
+        }
         label="Poster"
         value={formik.values.poster}
         onChange={formik.handleChange}
@@ -86,8 +92,12 @@ export function AddMovie() {
       <TextField
         id="rating"
         name="rating"
-        error
-        helperText="Incorrect entry!"
+        error={formik.touched.rating && formik.errors.rating}
+        helperText={
+          formik.touched.rating && formik.errors.rating
+            ? formik.errors.rating
+            : ""
+        }
         label="Rating"
         value={formik.values.rating}
         onChange={formik.handleChange}
@@ -100,8 +110,12 @@ export function AddMovie() {
       <TextField
         id="summary"
         name="summary"
-        error
-        helperText="Incorrect entry!"
+        error={formik.touched.summary && formik.errors.summary}
+        helperText={
+          formik.touched.summary && formik.errors.summary
+            ? formik.errors.summary
+            : ""
+        }
         label="Summary"
         value={formik.values.summary}
         onChange={formik.handleChange}
@@ -114,8 +128,12 @@ export function AddMovie() {
       <TextField
         id="trailer"
         name="trailer"
-        error
-        helperText="Incorrect entry!"
+        error={formik.touched.trailer && formik.errors.trailer}
+        helperText={
+          formik.touched.trailer && formik.errors.trailer
+            ? formik.errors.trailer
+            : ""
+        }
         label="Trailer"
         value={formik.values.trailer}
         onChange={formik.handleChange}
@@ -125,7 +143,7 @@ export function AddMovie() {
       {formik.touched.trailer && formik.errors.trailer
         ? formik.errors.trailer
         : ""}
-      <Button type="submit" variant="contained" onClick={createMovie}>
+      <Button type="submit" variant="contained">
         Add Movie
       </Button>
     </form>

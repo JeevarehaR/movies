@@ -13,6 +13,12 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { MovieDetails } from "./MovieDetails";
 import { EditMovie } from "./EditMovie";
 import { BasicForm } from "./BasicForm";
+import { AddColor } from "./AddColor";
+import { TicTacToe } from "./TicTacToe";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Paper from "@mui/material/Paper";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,51 +62,80 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function App() {
+  const [mode, setMode] = useState("light");
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   return (
-    <div className="App">
-      <AppBar position="static">
-        <Toolbar>
-          <Button color="inherit" onClick={() => navigate("/")}>
-            Home
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/movies")}>
-            Movies
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/movies/add")}>
-            Add Movies
-          </Button>
-          <Search sx={{ marginLeft: "auto" }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-        </Toolbar>
-      </AppBar>
+    <ThemeProvider theme={theme}>
+      <Paper style={{ borderRadius: 0, minHeight: "100vh" }} elevation={0}>
+        <div className="App">
+          <AppBar position="static">
+            <Toolbar>
+              <Button color="inherit" onClick={() => navigate("/")}>
+                Home
+              </Button>
+              <Button color="inherit" onClick={() => navigate("/movies")}>
+                Movies
+              </Button>
+              <Button color="inherit" onClick={() => navigate("/movies/add")}>
+                Add Movies
+              </Button>
+              <Button color="inherit" onClick={() => navigate("/color-game")}>
+                Color Game
+              </Button>
+              <Button color="inherit" onClick={() => navigate("/tic-tac-toe")}>
+                Tic-Tac-Toe
+              </Button>
+              <Button
+                sx={{ marginLeft: "auto", marginRight: "30px" }}
+                color="inherit"
+                startIcon={
+                  mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
+                }
+                onClick={() => setMode(mode == "light" ? "dark" : "light")}
+              >
+                {mode == "light" ? "dark" : "light"} MODE
+              </Button>
+              <Search sx={{ marginRight: 0 }}>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            </Toolbar>
+          </AppBar>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/films" element={<Navigate replace to="/movies" />} />
-        <Route path="/movies" element={<MovieList />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
-        <Route path="/movies/add" element={<AddMovie />} />
-        <Route path="/movies/edit/:id" element={<EditMovie />} />
-        <Route path="/basic-form" element={<BasicForm />} />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
-      </Routes>
-    </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/films" element={<Navigate replace to="/movies" />} />
+            <Route path="/movies" element={<MovieList />} />
+            <Route path="/movies/:id" element={<MovieDetails />} />
+            <Route path="/movies/add" element={<AddMovie />} />
+            <Route path="/movies/edit/:id" element={<EditMovie />} />
+            <Route path="/color-game" element={<AddColor />} />
+            <Route path="/basic-form" element={<BasicForm />} />
+            <Route path="/tic-tac-toe" element={<TicTacToe />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate replace to="/404" />} />
+          </Routes>
+        </div>
+      </Paper>
+    </ThemeProvider>
   );
 }
-
+// / movies={movieList.filter((mv) =>mv.name.toLowerCase().includes(search.toLowerCase()))}
 function Home() {
   return (
     <div>
