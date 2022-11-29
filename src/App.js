@@ -93,17 +93,7 @@ function App() {
               <Button color="inherit" onClick={() => navigate("/tic-tac-toe")}>
                 Tic-Tac-Toe
               </Button>
-              <Button
-                sx={{ marginLeft: "auto", marginRight: "30px" }}
-                color="inherit"
-                startIcon={
-                  mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
-                }
-                onClick={() => setMode(mode == "light" ? "dark" : "light")}
-              >
-                {mode == "light" ? "dark" : "light"} MODE
-              </Button>
-              <Search sx={{ marginRight: 0 }}>
+              <Search sx={{ marginLeft: "auto", marginRight: 0 }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
@@ -114,6 +104,16 @@ function App() {
                   inputProps={{ "aria-label": "search" }}
                 />
               </Search>
+              <Button
+                sx={{ margin: " 0 30px" }}
+                color="inherit"
+                startIcon={
+                  mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
+                }
+                onClick={() => setMode(mode == "light" ? "dark" : "light")}
+              >
+                {mode == "light" ? "dark" : "light"} MODE
+              </Button>
             </Toolbar>
           </AppBar>
 

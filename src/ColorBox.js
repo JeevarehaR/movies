@@ -3,8 +3,7 @@ export default function ColorBox({ color }) {
     backgroundColor: color,
     height: "35px",
     width: "300px",
-    marginTop: "10px",
-    marginLeft: "37.5%",
+    margin: "10px auto",
   };
 
   return <div style={styles}></div>;

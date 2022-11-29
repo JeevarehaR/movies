@@ -24,13 +24,13 @@ export function MovieList() {
     <div className="movie-list">
       {movieList.map((mv) => (
         <Movie
-          key={mv.id}
+          key={mv._id}
           movie={mv}
-          id={mv.id}
+          id={mv._id}
           deleteButton={
             <IconButton
               onClick={() => {
-                fetch(`${API}/movies/${mv.id}`, {
+                fetch(`${API}/movies/${mv._id}`, {
                   method: "DELETE",
                 }).then(() => getMovies());
               }}

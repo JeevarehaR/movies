@@ -15,8 +15,6 @@ export function AddColor() {
     fontSize: "18px",
     FontFamily: "Sans-Serif",
     backgroundColor: color,
-    height: "24px",
-    width: "300px",
   };
   return (
     <div>
@@ -27,12 +25,12 @@ export function AddColor() {
           type="text"
           value={color}
         />
-        <button
+        <Button
           onClick={() => setColorList([...colorList, color])}
           variant="contained"
         >
           Add Color
-        </button>
+        </Button>
       </div>
       {colorList.map((clr) => (
         <ColorBox color={clr} />
