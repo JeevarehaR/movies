@@ -2,4 +2,4 @@
 
 // export const API = "http://localhost:4000";
 
-export const API = "https://jeevr-node.herokuapp.com";
+export const API = "https://movies-app-3gm1.onrender.com";
